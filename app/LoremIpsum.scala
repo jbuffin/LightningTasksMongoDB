@@ -1,4 +1,4 @@
-
+package controllers
 
 import scala.util.Random
 

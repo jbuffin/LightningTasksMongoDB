@@ -5,15 +5,18 @@ import play.api._
 import play.api.mvc._
 
 object DefaultDataInit {
-	
+
 	def insert() = {
-		Logger.info("inserting data")
+		Logger.info("DefaultDataInit: inserting data")
 		if (Task.getAll.isEmpty) {
 			Seq(
-				Task("a task","do something fun"),
-				Task("some random act of kindness", "Some other stuff that might be painful")
+				Task(LoremIpsum.words(4), LoremIpsum.sentence),
+				Task(LoremIpsum.words(2), LoremIpsum.sentence),
+				Task(LoremIpsum.words(3), LoremIpsum.sentence),
+				Task(LoremIpsum.words(5), LoremIpsum.sentence)
 			).foreach(Task.create)
 		}
+		Logger.info("DefaultDataInit: done")
 	}
 	
 }
