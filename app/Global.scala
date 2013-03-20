@@ -6,10 +6,10 @@ import play.api.mvc.Results._
 
 object Global extends GlobalSettings {
 	override def onStart(app: Application) {
-		Logger.info("Initializing default data...")
+/*		Logger.info("Initializing default data...")
 		DefaultDataInit.insert()
-		Logger.info("...done")
-		Logger.info("US Warrior has started")
+		Logger.info("...done")*/
+		Logger.info("LightningTasks has started")
 	}
 
 	override def onBadRequest(request: RequestHeader, error: String) = {

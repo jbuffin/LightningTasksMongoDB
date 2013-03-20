@@ -1,0 +1,46 @@
+@(title: String)
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<title>@title</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+@CssImports()
+</head>
+<body>
+	@Header()
+	<!-- CONTENT -->
+	<div class="container-fluid roomForHeader">
+		<div class="row-fluid">
+			<div class="span3">
+				<div class="well sidebar-nav">
+					<ul class="nav nav-list">
+						<li class="nav-header">List of items</li>
+						<!-- ko if: calls().length === 0 -->
+						<li><em>Empty</em></li>
+						<!-- /ko -->
+						<!-- ko foreach: calls -->
+						<li><a href="#"	data-bind="text: title, click: $parent.getAnItem"></a></li>
+						<!-- /ko -->
+					</ul>
+				</div>
+			</div>
+			<div class="span9">
+				<div class="hero-unit" data-bind="with: currentItem">
+					<div data-bind="if: $data == null">
+						<p>Nothing loaded</p>
+					</div>
+					<h2 data-bind="text: title"></h2>
+					<p data-bind="text: text"></p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /CONTENT -->
+</body>
+<script src="@routes.Assets.at("javascripts/jquery.js")"></script>
+<script src="@routes.Assets.at("javascripts/knockout.js")"></script>
+<script src="@routes.Assets.at("bootstrap/js/bootstrap.js")"></script>
+<script src="@routes.Assets.at("javascripts/viewmodels/readme.js")"></script>
+</html>
+

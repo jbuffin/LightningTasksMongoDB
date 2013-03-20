@@ -4,6 +4,7 @@
 
 # Home page
 GET		/								controllers.Application.index
+GET		/tasks							controllers.Application.tasks
 
 # Ajax routes
 GET		/ajax/tasks						controllers.Tasks.getAll
