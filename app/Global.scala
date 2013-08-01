@@ -1,14 +1,11 @@
+import play.api.Application
 import play.api.GlobalSettings
-import play.api._
-import controllers.DefaultDataInit
-import play.api.mvc._
-import play.api.mvc.Results._
+import play.api.Logger
+import play.api.mvc.RequestHeader
+import play.api.mvc.Results.BadRequest
 
 object Global extends GlobalSettings {
 	override def onStart(app: Application) {
-/*		Logger.info("Initializing default data...")
-		DefaultDataInit.insert()
-		Logger.info("...done")*/
 		Logger.info("LightningTasks has started")
 	}
 

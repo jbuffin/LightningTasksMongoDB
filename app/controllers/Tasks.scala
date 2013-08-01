@@ -20,7 +20,6 @@ object Tasks extends Controller {
 			case nse: NoSuchElementException =>
 				Ok("No task")
 		}
-
 	}
 
 	implicit val readTaskJson = (

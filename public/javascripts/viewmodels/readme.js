@@ -4,16 +4,16 @@ var emptyItem = {
 };
 
 var possibleServerCalls = [ {
-	'title' : 'GET: /ajax/tasks',
-	'text' : 'get all'
+	'title' : 'GET: /tasks',
+	'text' : 'get all the tasks as an array of objects.'
 }, {
-	'title' : 'GET: /ajax/tasks/:id',
-	'text' : 'get a specific task by id'
+	'title' : 'GET: /tasks/:id',
+	'text' : 'get a specific task by id as JSON'
 }, {
-	'title' : 'POST: /ajax/tasks/new',
+	'title' : 'POST: /tasks/new',
 	'text' : 'make a new task'
 }, {
-	'title' : 'POST: /ajax/tasks/:id/delete',
+	'title' : 'POST: /tasks/:id/delete',
 	'text' : 'delete a task by id'
 } ];
 

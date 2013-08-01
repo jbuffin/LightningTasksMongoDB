@@ -20,7 +20,7 @@
 						<fieldset>
 							<p data-bind="visible: errorsDetected" class="alert alert-error">You must fill in a title</p>
 							<legend>New Item</legend>
-							<input placeholder="title" type="text" id="newTitle" />
+							<input placeholder="title" type="text" id="newTitle" required/>
 							<input placeholder="text" type="text" id="newText" />
 							<button type="submit" class="btn btn-primary" data-bind="click: submitNew">Add</button>
 						</fieldset>
