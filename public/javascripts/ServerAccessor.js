@@ -17,7 +17,10 @@ function TasksFromServer() {
 
 	self.remove = function(taskId, callback) {
 		jsRoutes.controllers.Tasks.remove(taskId).ajax({
-			success : callback
+			success : callback,
+			error : function(e) {
+				console.error(JSON.stringify(e));
+			}
 		});
 	}
 }

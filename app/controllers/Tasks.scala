@@ -3,45 +3,55 @@ package controllers
 import play.api._
 import play.api.mvc._
 import play.api.libs.json._
-import play.api.libs.json.Json
-import models.Task
-import play.api.libs.functional.syntax._
+import scala.concurrent.Future
+import reactivemongo.api._
+import play.modules.reactivemongo.MongoController
+import play.modules.reactivemongo.json.collection.JSONCollection
+import reactivemongo.bson.BSONObjectID
 
-object Tasks extends Controller {
+object Tasks extends Controller with MongoController {
+
+	def collection: JSONCollection = db.collection[JSONCollection]("tasks")
+
+	import play.api.data.Form
+	import models._
+	import models.JsonFormats._
+
+	def newTask = Action(parse.json) { request =>
+		request.body.validate[Task].map { task =>
+			Async {
+				val futureResult = collection.insert(task)
+				futureResult.map { lastError =>
+					if (lastError.ok) {
+						Ok(lastError.stringify)
+					}
+					else {
+						Ok
+					}
+				}
+			}
+		}.recoverTotal { error =>
+			BadRequest(Json.obj("res" -> "KO") ++ Json.obj("error" -> JsError.toFlatJson(error)))
+		}
+	}
 
 	def getAll = Action {
-		Ok(Json.toJson(Task.getAll))
-	}
+		Async {
+			val cursor: Cursor[JsValue] = collection.find(Json.obj()).cursor[JsValue]
+			val futureTaskList: Future[List[JsValue]] = cursor.toList
 
-	def getById(taskId: Long) = Action {
-		try {
-			Ok(Json.toJson(Task.getById(taskId).get))
-		} catch {
-			case nse: NoSuchElementException =>
-				Ok("No task")
-		}
-	}
-
-	implicit val readTaskJson = (
-		(__ \ 'taskId).read[String] and
-		(__ \ 'title).read[String] and
-		(__ \ 'text).read[String]) tupled
-
-	def newTask = Action { request =>
-		request.body.asJson.map { json =>
-			json.validate[(String, String, String)].map {
-				case (taskId, title, text) => Ok(Task.create(Task(title, text)).toString)
-			}.recoverTotal {
-				e => BadRequest(Json.obj("status" -> "KO", "message" -> JsError.toFlatJson(e)))
+			futureTaskList.map { tasks =>
+				Ok(Json.toJson(tasks))
 			}
-		}.getOrElse {
-			BadRequest("Expecting Json data")
 		}
 	}
 
-	def remove(taskId: Long) = Action {
-		Task.delete(taskId)
-		Ok(Json.toJson("Ok"))
+	def remove(taskId: String) = Action {
+		Async {
+			val futureResult = collection.remove(Json.obj("_id" -> Json.obj("$oid" -> taskId)))
+			futureResult.map(_ => Ok)
+		}
 	}
 
 }
+

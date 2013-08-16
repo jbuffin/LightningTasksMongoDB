@@ -15,7 +15,7 @@ function TodoListViewModel() {
 	}
 
 	self.removeItem = function(theItem) {
-		server.remove(theItem.taskId, function(data) {
+		server.remove(theItem._id.$oid, function(data) {
 			self.myTodos.remove(theItem);
 			self.currentItem(emptyItem);
 		});
@@ -23,7 +23,6 @@ function TodoListViewModel() {
 
 	self.submitNew = function() {
 		var newTask = {
-			"taskId": "-1",
 			"title": $('#newTitle').val(),
 			"text": $('#newText').val()
 		};
@@ -48,8 +47,10 @@ function TodoListViewModel() {
 	}
 	self.init();
 }
+var todo;
 $(function() {
-	if (typeof ko !== "undefined") {
-		ko.applyBindings(new TodoListViewModel());
+	todo = new TodoListViewModel();
+	if (ko) {
+		ko.applyBindings(todo);
 	}
 });

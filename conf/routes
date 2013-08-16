@@ -8,9 +8,8 @@ GET    /readme             controllers.Assets.at(path="/public", file="html/read
 
 # Ajax routes
 GET    /tasks              controllers.Tasks.getAll
-GET    /tasks/:id          controllers.Tasks.getById(id: Long)
-POST   /tasks/new          controllers.Tasks.newTask
-POST   /tasks/:id/delete   controllers.Tasks.remove(id: Long)
+POST   /tasks              controllers.Tasks.newTask
+POST   /tasks/:id/delete   controllers.Tasks.remove(id: String)
 
 # Javascript routes - Define the list of these
 GET    /javascriptroutes   controllers.Application.javascriptRoutes

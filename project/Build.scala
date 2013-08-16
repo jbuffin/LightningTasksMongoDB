@@ -10,7 +10,7 @@ object ApplicationBuild extends Build {
 	val appDependencies = Seq(
 		jdbc,
 		anorm,
-		"mysql" % "mysql-connector-java" % "5.1.18"
+		"org.reactivemongo" %% "play2-reactivemongo" % "0.9"
 	)
 
 	val main = play.Project(appName, appVersion, appDependencies).settings(      
