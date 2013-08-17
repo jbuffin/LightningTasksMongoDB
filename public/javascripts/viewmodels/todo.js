@@ -23,8 +23,8 @@ function TodoListViewModel() {
 
 	self.submitNew = function() {
 		var newTask = {
-			"title": $('#newTitle').val(),
-			"text": $('#newText').val()
+			"title" : $('#newTitle').val(),
+			"text" : $('#newText').val()
 		};
 		if (newTask.title === "") {
 			self.errorsDetected(true);
