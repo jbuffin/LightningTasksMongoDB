@@ -5,11 +5,9 @@ import play.Project._
 object ApplicationBuild extends Build {
 
 	val appName = "LightningTasks"
-	val appVersion = "1.0-SNAPSHOT"
+	val appVersion = "1.0"
 
 	val appDependencies = Seq(
-		jdbc,
-		anorm,
 		"org.reactivemongo" %% "play2-reactivemongo" % "0.9"
 	)
 

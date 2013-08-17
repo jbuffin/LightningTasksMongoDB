@@ -15,7 +15,7 @@ function TodoListViewModel() {
 	}
 
 	self.removeItem = function(theItem) {
-		server.remove(theItem._id.$oid, function(data) {
+		server.remove(theItem._id, function(data) {
 			self.myTodos.remove(theItem);
 			self.currentItem(emptyItem);
 		});
@@ -30,7 +30,7 @@ function TodoListViewModel() {
 			self.errorsDetected(true);
 		} else {
 			server.put(newTask, function(data) {
-				newTask.taskId = data;
+				newTask._id = data.id;
 				self.myTodos.push(newTask);
 				self.errorsDetected(false);
 				$('#newText').val("");

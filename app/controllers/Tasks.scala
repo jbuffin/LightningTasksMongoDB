@@ -19,16 +19,11 @@ object Tasks extends Controller with MongoController {
 
 	def newTask = Action(parse.json) { request =>
 		request.body.validate[Task].map { task =>
+			val objectId = BSONObjectID.generate
+			val taskWithId = Json.obj("_id" -> objectId.stringify, "title" -> task.title, "text" -> task.text)
+			val futureResult = collection.insert(taskWithId)
 			Async {
-				val futureResult = collection.insert(task)
-				futureResult.map { lastError =>
-					if (lastError.ok) {
-						Ok(lastError.stringify)
-					}
-					else {
-						Ok
-					}
-				}
+				futureResult.map(_ => Ok(Json.obj("id" -> objectId.stringify)))
 			}
 		}.recoverTotal { error =>
 			BadRequest(Json.obj("res" -> "KO") ++ Json.obj("error" -> JsError.toFlatJson(error)))
@@ -48,7 +43,7 @@ object Tasks extends Controller with MongoController {
 
 	def remove(taskId: String) = Action {
 		Async {
-			val futureResult = collection.remove(Json.obj("_id" -> Json.obj("$oid" -> taskId)))
+			val futureResult = collection.remove(Json.obj("_id" -> taskId))
 			futureResult.map(_ => Ok)
 		}
 	}
