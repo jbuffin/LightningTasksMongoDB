@@ -3,16 +3,17 @@
 # ~~~~
 
 # Home page
-GET    /                   controllers.Application.tasks
-GET    /readme             controllers.Assets.at(path="/public", file="html/readme-static.html")
+GET    /                                             controllers.Application.tasks
+GET    /readme                                       controllers.Assets.at(path="/public", file="html/readme-static.html")
+GET    /loaderio-7db96d968a02c636a3caf10757b830e0/   controllers.Assets.at(path="/public", file="html/loaderio.html")
 
 # Ajax routes
-GET    /tasks              controllers.Tasks.getAll
-POST   /tasks              controllers.Tasks.newTask
-POST   /tasks/:id/delete   controllers.Tasks.remove(id: String)
+GET    /tasks                                        controllers.Tasks.getAll
+POST   /tasks                                        controllers.Tasks.newTask
+POST   /tasks/:id/delete                             controllers.Tasks.remove(id: String)
 
 # Javascript routes - Define the list of these
-GET    /javascriptroutes   controllers.Application.javascriptRoutes
+GET    /javascriptroutes                             controllers.Application.javascriptRoutes
 
 # Map static resources from the /public folder to the /assets URL path
-GET    /assets/*file       controllers.Assets.at(path="/public", file)
+GET    /assets/*file                                 controllers.Assets.at(path="/public", file)
